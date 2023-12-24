@@ -2,15 +2,29 @@ import { Grid } from 'semantic-ui-react';
 import EventsList from './EventList';
 import EventForm from '../form/EventForm';
 import { sampleData } from '../../../app/api/sampleData';
+import { FC, useEffect, useState } from 'react';
+import { AppEvent } from '../../../interfaces/event';
 
-const EventDashboard = () => {
+interface EventDashboardProps {
+  isFormOpen: boolean;
+  setIsFormOpen: (value: boolean) => void;
+}
+
+const EventDashboard: FC<EventDashboardProps> = ({
+  isFormOpen,
+  setIsFormOpen,
+}) => {
+  const [events, setEvents] = useState<AppEvent[]>([]);
+  useEffect(() => {
+    setEvents(sampleData);
+  }, []);
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventsList events={sampleData}/>
+        <EventsList events={events} />
       </Grid.Column>
       <Grid.Column width={6}>
-        <EventForm />
+        {isFormOpen && <EventForm setIsFormOpen={setIsFormOpen} />}
       </Grid.Column>
     </Grid>
   );
