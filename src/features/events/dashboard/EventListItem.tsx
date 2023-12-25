@@ -20,7 +20,7 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
       <Segment>
         <ItemGroup>
           <Item>
-            <Item.Image size='tiny' circular src={event.hostPhotoURL} />
+            <Item.Image size='tiny' circular src={event.hostPhotoURL  || './user.png'} />
             <Item.Content>
               <Item.Header>{event.title}</Item.Header>
               <Item.Description>Hosted by : {event.hostedBy}</Item.Description>
@@ -31,7 +31,7 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
       <Segment>
         <span>
           <Icon name='clock' /> {event.date}
-          <Icon name='marker' /> {event.venue}
+          <Icon name='marker' /> {event.street}
         </span>
       </Segment>
       <Segment secondary>

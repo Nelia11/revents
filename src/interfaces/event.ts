@@ -5,7 +5,7 @@ export interface AppEvent {
   category: string;
   description: string;
   city: string;
-  venue: string;
+  street: string;
   hostedBy: string;
   hostPhotoURL: string;
   attendees: Attendee[];

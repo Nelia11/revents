@@ -1,11 +1,14 @@
 import { ChangeEvent, FC, useState } from 'react';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
+import { AppEvent } from '../../../interfaces/event';
+import { createId } from '@paralleldrive/cuid2';
 
 interface EventFormProps {
   setIsFormOpen: (value: boolean) => void;
+  addEvent: (value: AppEvent) => void;
 }
 
-const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
+const EventForm: FC<EventFormProps> = ({ setIsFormOpen, addEvent }) => {
   const initValues = {
     title: '',
     category: '',
@@ -23,7 +26,13 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
   };
 
   const handleSubmit = () => {
-    console.log(values);
+    addEvent({
+      ...values,
+      id: createId(),
+      hostedBy: 'bob',
+      attendees: [],
+      hostPhotoURL: '',
+    });
   };
 
   return (
@@ -37,6 +46,7 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
             value={values.title}
             name='title'
             onChange={(e) => handleInputChange(e)}
+            required
           />
         </Form.Field>
         <Form.Field>
@@ -46,6 +56,7 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
             value={values.category}
             name='category'
             onChange={(e) => handleInputChange(e)}
+            required
           />
         </Form.Field>
         <Form.Field>
@@ -55,6 +66,7 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
             value={values.description}
             name='description'
             onChange={(e) => handleInputChange(e)}
+            required
           />
         </Form.Field>
         <Form.Field>
@@ -64,6 +76,7 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
             value={values.city}
             name='city'
             onChange={(e) => handleInputChange(e)}
+            required
           />
         </Form.Field>
         <Form.Field>
@@ -73,6 +86,7 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
             value={values.street}
             name='street'
             onChange={(e) => handleInputChange(e)}
+            required
           />
         </Form.Field>
         <Form.Field>
@@ -82,6 +96,7 @@ const EventForm: FC<EventFormProps> = ({ setIsFormOpen }) => {
             value={values.date}
             name='date'
             onChange={(e) => handleInputChange(e)}
+            required
           />
         </Form.Field>
         <Button type='submit' floated='right' positive content='Submit' />
