@@ -15,22 +15,33 @@ const EventDashboard: FC<EventDashboardProps> = ({
   setIsFormOpen,
 }) => {
   const [events, setEvents] = useState<AppEvent[]>(sampleData);
+  const [selectedEvent, setSelectedEvent] = useState<AppEvent | null>(null);
 
   const addEvent = (event: AppEvent) => {
     setEvents((prevState) => {
       return [...prevState, event];
     });
-    setIsFormOpen(false)
+    setIsFormOpen(false);
+  };
+
+  const handleSelectEvent = (event: AppEvent) => {
+    setSelectedEvent(event);
+    setIsFormOpen(true);
   };
 
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventsList events={events} />
+        <EventsList events={events} selectEvent={handleSelectEvent} />
       </Grid.Column>
       <Grid.Column width={6}>
         {isFormOpen && (
-          <EventForm setIsFormOpen={setIsFormOpen} addEvent={addEvent} />
+          <EventForm
+            setIsFormOpen={setIsFormOpen}
+            addEvent={addEvent}
+            selectedEvent={selectedEvent}
+            key={selectedEvent?.id || 'create'}
+          />
         )}
       </Grid.Column>
     </Grid>

@@ -3,13 +3,14 @@ import EventListItem from './EventListItem';
 
 interface EventListProps {
   events: AppEvent[];
+  selectEvent: (event: AppEvent) => void
 }
 
-const EventList: React.FC<EventListProps> = ({ events }) => {
+const EventList: React.FC<EventListProps> = ({ events, selectEvent }) => {
   return (
     <>
       {events.map((event) => (
-        <EventListItem key={event.id} event={event} />
+        <EventListItem key={event.id} event={event} selectEvent={selectEvent}/>
       ))}
     </>
   );
