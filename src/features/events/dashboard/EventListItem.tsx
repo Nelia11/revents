@@ -12,15 +12,23 @@ import { AppEvent } from '../../../interfaces/event';
 
 interface EventListItemProps {
   event: AppEvent;
+  selectEvent: (event: AppEvent) => void;
 }
 
-const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
+const EventListItem: React.FC<EventListItemProps> = ({
+  event,
+  selectEvent,
+}) => {
   return (
     <SegmentGroup>
       <Segment>
         <ItemGroup>
           <Item>
-            <Item.Image size='tiny' circular src={event.hostPhotoURL  || './user.png'} />
+            <Item.Image
+              size='tiny'
+              circular
+              src={event.hostPhotoURL || './user.png'}
+            />
             <Item.Content>
               <Item.Header>{event.title}</Item.Header>
               <Item.Description>Hosted by : {event.hostedBy}</Item.Description>
@@ -43,7 +51,12 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
       </Segment>
       <Segment clearing>
         <span>{event.description}</span>
-        <Button color='teal' floated='right' content='View' />
+        <Button
+          color='teal'
+          floated='right'
+          content='View'
+          onClick={() => selectEvent(event)}
+        />
       </Segment>
     </SegmentGroup>
   );

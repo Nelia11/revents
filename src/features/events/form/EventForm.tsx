@@ -6,10 +6,15 @@ import { createId } from '@paralleldrive/cuid2';
 interface EventFormProps {
   setIsFormOpen: (value: boolean) => void;
   addEvent: (value: AppEvent) => void;
+  selectedEvent: AppEvent | null;
 }
 
-const EventForm: FC<EventFormProps> = ({ setIsFormOpen, addEvent }) => {
-  const initValues = {
+const EventForm: FC<EventFormProps> = ({
+  setIsFormOpen,
+  addEvent,
+  selectedEvent,
+}) => {
+  const initValues = selectedEvent ?? {
     title: '',
     category: '',
     description: '',
