@@ -8,14 +8,17 @@ import { AppEvent } from '../../../interfaces/event';
 interface EventDashboardProps {
   isFormOpen: boolean;
   setIsFormOpen: (value: boolean) => void;
+  selectedEvent: AppEvent | null;
+  selectEvent: (event: AppEvent) => void;
 }
 
 const EventDashboard: FC<EventDashboardProps> = ({
   isFormOpen,
   setIsFormOpen,
+  selectedEvent,
+  selectEvent,
 }) => {
   const [events, setEvents] = useState<AppEvent[]>(sampleData);
-  const [selectedEvent, setSelectedEvent] = useState<AppEvent | null>(null);
 
   const addEvent = (event: AppEvent) => {
     setEvents((prevState) => {
@@ -24,15 +27,10 @@ const EventDashboard: FC<EventDashboardProps> = ({
     setIsFormOpen(false);
   };
 
-  const handleSelectEvent = (event: AppEvent) => {
-    setSelectedEvent(event);
-    setIsFormOpen(true);
-  };
-
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventsList events={events} selectEvent={handleSelectEvent} />
+        <EventsList events={events} selectEvent={selectEvent} />
       </Grid.Column>
       <Grid.Column width={6}>
         {isFormOpen && (
