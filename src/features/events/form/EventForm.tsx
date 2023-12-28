@@ -7,12 +7,14 @@ interface EventFormProps {
   setIsFormOpen: (value: boolean) => void;
   addEvent: (value: AppEvent) => void;
   selectedEvent: AppEvent | null;
+  updateEvent: (event: AppEvent) => void;
 }
 
 const EventForm: FC<EventFormProps> = ({
   setIsFormOpen,
   addEvent,
   selectedEvent,
+  updateEvent,
 }) => {
   const initValues = selectedEvent ?? {
     title: '',
@@ -31,18 +33,20 @@ const EventForm: FC<EventFormProps> = ({
   };
 
   const handleSubmit = () => {
-    addEvent({
-      ...values,
-      id: createId(),
-      hostedBy: 'bob',
-      attendees: [],
-      hostPhotoURL: '',
-    });
+    selectedEvent
+      ? updateEvent({ ...selectedEvent, ...values })
+      : addEvent({
+          ...values,
+          id: createId(),
+          hostedBy: 'bob',
+          attendees: [],
+          hostPhotoURL: '',
+        });
   };
 
   return (
     <Segment clearing>
-      <Header content='Create Event' />
+      <Header content={selectedEvent ? 'Update event' : 'Create event'} />
       <Form onSubmit={handleSubmit}>
         <Form.Field>
           <input

@@ -9,7 +9,7 @@ interface EventDashboardProps {
   isFormOpen: boolean;
   setIsFormOpen: (value: boolean) => void;
   selectedEvent: AppEvent | null;
-  selectEvent: (event: AppEvent) => void;
+  selectEvent: (event: AppEvent | null) => void;
 }
 
 const EventDashboard: FC<EventDashboardProps> = ({
@@ -27,6 +27,16 @@ const EventDashboard: FC<EventDashboardProps> = ({
     setIsFormOpen(false);
   };
 
+  const updateEvent = (updatedEvent: AppEvent) => {
+    setEvents(
+      events.map((event) =>
+        event.id === updatedEvent.id ? updatedEvent : event
+      )
+    );
+    selectEvent(null)
+    setIsFormOpen(false)
+  };
+
   return (
     <Grid>
       <Grid.Column width={10}>
@@ -36,6 +46,7 @@ const EventDashboard: FC<EventDashboardProps> = ({
         {isFormOpen && (
           <EventForm
             setIsFormOpen={setIsFormOpen}
+            updateEvent={updateEvent}
             addEvent={addEvent}
             selectedEvent={selectedEvent}
             key={selectedEvent?.id || 'create'}
