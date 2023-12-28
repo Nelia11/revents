@@ -28,7 +28,7 @@ const NavBar: FC<NavBarProps> = ({ setIsFormOpen }) => {
           <Button
             basic
             inverted
-            content='Login'
+            content='Register'
             style={{ marginLeft: '0.5em' }}
           />
         </MenuItem>
