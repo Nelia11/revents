@@ -33,14 +33,18 @@ const EventDashboard: FC<EventDashboardProps> = ({
         event.id === updatedEvent.id ? updatedEvent : event
       )
     );
-    selectEvent(null)
-    setIsFormOpen(false)
+    selectEvent(null);
+    setIsFormOpen(false);
+  };
+
+  const deleteEvent = (eventId: string) => {
+    setEvents(events.filter((event) => event.id !== eventId));
   };
 
   return (
     <Grid>
       <Grid.Column width={10}>
-        <EventsList events={events} selectEvent={selectEvent} />
+        <EventsList events={events} selectEvent={selectEvent} deleteEvent={deleteEvent} />
       </Grid.Column>
       <Grid.Column width={6}>
         {isFormOpen && (
