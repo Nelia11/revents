@@ -1,8 +1,8 @@
 import { Container } from 'semantic-ui-react';
-import EventDashboard from '../../features/events/dashboard/EventDashboard';
 import NavBar from './nav/NavBar';
 import { useState } from 'react';
 import { AppEvent } from '../../interfaces/event';
+import { Outlet } from 'react-router-dom';
 
 const App = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -22,12 +22,7 @@ const App = () => {
     <>
       <NavBar setIsFormOpen={handleCreateFormOpen} />
       <Container className='main'>
-        <EventDashboard
-          isFormOpen={isFormOpen}
-          setIsFormOpen={setIsFormOpen}
-          selectedEvent={selectedEvent}
-          selectEvent={handleSelectEvent}
-        />
+        <Outlet />
       </Container>
     </>
   );
