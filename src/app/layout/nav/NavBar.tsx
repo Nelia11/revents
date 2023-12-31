@@ -1,11 +1,6 @@
-import { FC } from 'react';
 import { Button, Container, Menu, MenuItem } from 'semantic-ui-react';
 
-interface NavBarProps {
-  setIsFormOpen: (value: boolean) => void;
-}
-
-const NavBar: FC<NavBarProps> = ({ setIsFormOpen }) => {
+const NavBar = () => {
   return (
     <Menu inverted={true} fixed='top'>
       <Container>
@@ -20,7 +15,6 @@ const NavBar: FC<NavBarProps> = ({ setIsFormOpen }) => {
             positive={true}
             inverted={true}
             content='Create event'
-            onClick={() => setIsFormOpen(true)}
           />
         </MenuItem>
         <MenuItem position='right'>
