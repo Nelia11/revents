@@ -12,15 +12,9 @@ import { AppEvent } from '../../../interfaces/event';
 
 interface EventListItemProps {
   event: AppEvent;
-  selectEvent: (event: AppEvent) => void;
-  deleteEvent: (eventId: string) => void;
 }
 
-const EventListItem: React.FC<EventListItemProps> = ({
-  event,
-  selectEvent,
-  deleteEvent,
-}) => {
+const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
   return (
     <SegmentGroup>
       <Segment>
@@ -54,18 +48,8 @@ const EventListItem: React.FC<EventListItemProps> = ({
       <Segment clearing>
         <span>{event.description}</span>
         <Item>
-          <Button
-            color='red'
-            floated='right'
-            content='Delete'
-            onClick={() => deleteEvent(event.id)}
-          />
-          <Button
-            color='teal'
-            floated='right'
-            content='View'
-            onClick={() => selectEvent(event)}
-          />
+          <Button color='red' floated='right' content='Delete' />
+          <Button color='teal' floated='right' content='View' />
         </Item>
       </Segment>
     </SegmentGroup>
