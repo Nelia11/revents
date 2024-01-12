@@ -1,9 +1,14 @@
+import { FC } from 'react';
 import { Button, MenuItem } from 'semantic-ui-react';
 
-const SignedOutButtons = () => {
+interface SignedOutButtonsProps {
+  setAuth: (value: boolean) => void;
+}
+
+const SignedOutButtons: FC<SignedOutButtonsProps> = ({ setAuth }) => {
   return (
     <MenuItem position='right'>
-      <Button basic inverted content='Login' />
+      <Button basic inverted content='Login' onClick={() => setAuth(true)} />
       <Button
         basic
         inverted
