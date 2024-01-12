@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import { Button, Container, Menu, MenuItem } from 'semantic-ui-react';
+import SignedInMenu from './SignedInMenu';
 
 const NavBar = () => {
   return (
@@ -20,15 +21,7 @@ const NavBar = () => {
             content='Create event'
           />
         </MenuItem>
-        <MenuItem position='right'>
-          <Button basic inverted content='Login' />
-          <Button
-            basic
-            inverted
-            content='Register'
-            style={{ marginLeft: '0.5em' }}
-          />
-        </MenuItem>
+        <SignedInMenu />
       </Container>
     </Menu>
   );
