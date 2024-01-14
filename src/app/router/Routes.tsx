@@ -14,11 +14,11 @@ export const router = createBrowserRouter([
         element: <EventDashboard />,
       },
       {
-        path: '/events:id',
+        path: '/events/:id',
         element: <EventDetailedPage />,
       },
       {
-        path: '/manage:id',
+        path: '/manage/:id',
         element: <EventForm />,
       },
       {
