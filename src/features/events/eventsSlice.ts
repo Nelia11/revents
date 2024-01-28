@@ -10,10 +10,25 @@ const initialState: Events = {
   events: sampleData,
 };
 
-const eventsSlice = createSlice({
+export const eventsSlice = createSlice({
   name: 'events',
   initialState,
-  reducers: {},
+  reducers: {
+    createEvent: (state, action) => {
+      state.events.push(action.payload);
+    },
+    updateEvent: (state, action) => {
+      state.events[
+        state.events.findIndex((evt) => evt.id === action.payload.id)
+      ];
+    },
+    deleteEvent: (state, action) => {
+      state.events.splice(
+        state.events.findIndex((evt) => evt.id === action.payload),
+        1
+      );
+    },
+  },
 });
 
-export default eventsSlice;
+export const { createEvent, updateEvent, deleteEvent } = eventsSlice.actions;
