@@ -1,13 +1,18 @@
 import { ChangeEvent, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import { useAppSelector } from '../../../app/store/store';
+import { useDispatch } from 'react-redux';
+import { createEvent, updateEvent } from '../eventsSlice';
+import { createId } from '@paralleldrive/cuid2';
 
 const EventForm = () => {
-  const { id } = useParams();
+  let { id } = useParams();
   const event = useAppSelector((state) =>
     state.events.events.find((e) => e.id === id)
   );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const initValues = event ?? {
     title: '',
@@ -26,15 +31,19 @@ const EventForm = () => {
   };
 
   const handleSubmit = () => {
-    // selectedEvent
-    //   ? updateEvent({ ...selectedEvent, ...values })
-    //   : addEvent({
-    //       ...values,
-    //       id: createId(),
-    //       hostedBy: 'bob',
-    //       attendees: [],
-    //       hostPhotoURL: '',
-    //     });
+    id = id ?? createId();
+    event
+      ? dispatch(updateEvent({ ...event, ...values }))
+      : dispatch(
+          createEvent({
+            ...values,
+            id,
+            hostedBy: 'bob',
+            attendees: [],
+            hostPhotoURL: '',
+          })
+        );
+    navigate(`/events/${id}`);
   };
 
   return (
