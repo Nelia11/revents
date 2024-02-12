@@ -1,11 +1,14 @@
 import { Link, useParams } from 'react-router-dom';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import { useAppSelector } from '../../../app/store/store';
-import { FieldValues, useForm } from 'react-hook-form';
+import { Controller, FieldValues, useForm } from 'react-hook-form';
+import { categoryOptions } from './categoryOptions';
 
 const EventForm = () => {
   const {
     register,
+    control,
+    setValue,
     handleSubmit,
     formState: { errors, isValid, isSubmitting },
   } = useForm({ mode: 'onTouched' });
@@ -42,11 +45,23 @@ const EventForm = () => {
           {...register('title', { required: 'Title is required' })}
           error={errors.title && errors.title.message}
         />
-        <Form.Input
-          placeholder='Category'
-          defaultValue={event?.category || ''}
-          {...register('category', { required: 'Category is required' })}
-          error={errors.category && errors.category.message}
+        <Controller
+          name='category'
+          control={control}
+          rules={{ required: 'Category is required' }}
+          defaultValue={event?.category}
+          render={({ field }) => (
+            <Form.Select
+              options={categoryOptions}
+              placeholder='Category'
+              clearable
+              {...field}
+              onChange={(_, d) =>
+                setValue('category', d.value, { shouldValidate: true })
+              }
+              error={errors.category && errors.category.message}
+            />
+          )}
         />
         <Form.TextArea
           placeholder='Description'
