@@ -3,6 +3,8 @@ import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import { useAppSelector } from '../../../app/store/store';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { categoryOptions } from './categoryOptions';
+import 'react-datepicker/dist/react-datepicker.css';
+import DatePicker from 'react-datepicker';
 
 const EventForm = () => {
   const {
@@ -82,13 +84,26 @@ const EventForm = () => {
           {...register('street', { required: 'Street is required' })}
           error={errors.street && errors.street.message}
         />
-        <Form.Input
-          type='date'
-          placeholder='Date'
-          defaultValue={event?.date || ''}
-          {...register('date', { required: 'Date is required' })}
-          error={errors.date && errors.date.message}
-        />
+        <Form.Field>
+          <Controller
+            name='date'
+            control={control}
+            rules={{ required: 'Date is required' }}
+            defaultValue={(event && new Date(event.date)) || null}
+            render={({ field }) => (
+              <DatePicker
+                selected={field.value}
+                onChange={(value) =>
+                  setValue('date', value, { shouldValidate: true })
+                }
+                showTimeSelect
+                timeCaption='time'
+                dateFormat='MMM d, yyyy h:mm aa'
+                placeholderText='Event date and time'
+              />
+            )}
+          />
+        </Form.Field>
         <Button
           loading={isSubmitting}
           disabled={!isValid}
