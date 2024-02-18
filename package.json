@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://github.com/Nelia11/revents",
+  "homepage": "https://nelia11.github.io/revents/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
