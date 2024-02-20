@@ -3,6 +3,7 @@ import { Button, Container, Menu, MenuItem } from 'semantic-ui-react';
 import SignedInMenu from './SignedInMenu';
 import { useState } from 'react';
 import SignedOutButtons from './SignedOutButtons';
+import logo from '/logo.png'
 
 const NavBar = () => {
   const [auth, setAuth] = useState(true);
@@ -11,7 +12,7 @@ const NavBar = () => {
     <Menu inverted={true} fixed='top'>
       <Container>
         <MenuItem header as={NavLink} to='/'>
-          <img src='/logo.png' alt='logo' />
+          <img src={logo} alt='logo' />
           Re-vents
         </MenuItem>
         <MenuItem name='Events' as={NavLink} to='/events' />

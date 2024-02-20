@@ -2,6 +2,12 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Header, Image, Item, Segment } from 'semantic-ui-react';
 import { AppEvent } from '../../../interfaces/event';
+import culture from '/categoryImages/culture.jpg';
+import drinks from '/categoryImages/drinks.jpg';
+import film from '/categoryImages/film.jpg';
+import food from '/categoryImages/food.jpg';
+import music from '/categoryImages/music.jpg';
+import travel from '/categoryImages/travel.jpg';
 
 interface EventDetailedHeaderProps {
   event: AppEvent;
@@ -20,14 +26,24 @@ const EventDetailedHeader: FC<EventDetailedHeaderProps> = ({ event }) => {
     height: 'auto',
     color: 'white',
   };
+
+  const imageSrc =
+    event.category === 'culture'
+      ? culture
+      : event.category === 'drinks'
+      ? drinks
+      : event.category === 'film'
+      ? film
+      : event.category === 'food'
+      ? food
+      : event.category === 'music'
+      ? music
+      : travel;
+
   return (
     <Segment.Group>
       <Segment basic attached='top' style={{ padding: '0' }}>
-        <Image
-          src={`/assets/categoryImages/${event.category}.jpg`}
-          fluid
-          style={eventImageStyle}
-        />
+        <Image src={imageSrc} fluid style={eventImageStyle} />
 
         <Segment basic style={eventImageTextStyle}>
           <Item.Group>

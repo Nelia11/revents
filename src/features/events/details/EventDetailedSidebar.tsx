@@ -1,4 +1,5 @@
 import { Item, Segment } from 'semantic-ui-react';
+import user from '/user.png';
 
 const EventDetailedSidebar = () => {
   return (
@@ -16,7 +17,7 @@ const EventDetailedSidebar = () => {
       <Segment attached>
         <Item.Group relaxed divided>
           <Item style={{ position: 'relative' }}>
-            <Item.Image size='tiny' src='/user.png' />
+            <Item.Image size='tiny' src={user} />
             <Item.Content verticalAlign='middle'>
               <Item.Header as='h3'>
                 <span>Tom</span>
@@ -24,7 +25,7 @@ const EventDetailedSidebar = () => {
             </Item.Content>
           </Item>
           <Item style={{ position: 'relative' }}>
-            <Item.Image size='tiny' src='/user.png' />
+            <Item.Image size='tiny' src={user} />
             <Item.Content verticalAlign='middle'>
               <Item.Header as='h3'>
                 <span>Bob</span>

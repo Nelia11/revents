@@ -7,6 +7,7 @@ import {
   Image,
   Segment,
 } from 'semantic-ui-react';
+import logo from '/logo.png'
 
 const HomePage = () => {
   return (
@@ -14,7 +15,7 @@ const HomePage = () => {
       <Container>
         <Header as='h1' inverted>
           <Image
-            src='/logo.png'
+            src={logo}
             size='massive'
             alt='logo'
             style={{ marginBottom: 12 }}
