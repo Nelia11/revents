@@ -1,4 +1,5 @@
 import { Comment, Header, Segment, Form, Button } from 'semantic-ui-react';
+import user from '/user.png';
 
 const EventDetailedChat = () => {
   return (
@@ -16,7 +17,7 @@ const EventDetailedChat = () => {
       <Segment attached>
         <Comment.Group>
           <Comment>
-            <Comment.Avatar src='/user.png' />
+            <Comment.Avatar src={user} />
             <Comment.Content>
               <Comment.Author as='a'>Matt</Comment.Author>
               <Comment.Metadata>
@@ -30,7 +31,7 @@ const EventDetailedChat = () => {
           </Comment>
 
           <Comment>
-            <Comment.Avatar src='/user.png' />
+            <Comment.Avatar src={user} />
             <Comment.Content>
               <Comment.Author as='a'>Elliot Fu</Comment.Author>
               <Comment.Metadata>
@@ -47,7 +48,7 @@ const EventDetailedChat = () => {
             </Comment.Content>
             <Comment.Group>
               <Comment>
-                <Comment.Avatar src='/user.png' />
+                <Comment.Avatar src={user} />
                 <Comment.Content>
                   <Comment.Author as='a'>Jenny Hess</Comment.Author>
                   <Comment.Metadata>
@@ -63,7 +64,7 @@ const EventDetailedChat = () => {
           </Comment>
 
           <Comment>
-            <Comment.Avatar src='/user.png' />
+            <Comment.Avatar src={user} />
             <Comment.Content>
               <Comment.Author as='a'>Joe Henderson</Comment.Author>
               <Comment.Metadata>
