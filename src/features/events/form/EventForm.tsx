@@ -1,12 +1,18 @@
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Button, Form, Header, Segment } from 'semantic-ui-react';
 import { useAppSelector } from '../../../app/store/store';
 import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { categoryOptions } from './categoryOptions';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
+import { useDispatch } from 'react-redux';
+import { createId } from '@paralleldrive/cuid2';
+import { createEvent, updateEvent } from '../eventsSlice';
 
 const EventForm = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     control,
@@ -21,20 +27,20 @@ const EventForm = () => {
   );
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
-    // id = id ?? createId();
-    // event
-    //   ? dispatch(updateEvent({ ...event, ...values }))
-    //   : dispatch(
-    //       createEvent({
-    //         ...values,
-    //         id,
-    //         hostedBy: 'bob',
-    //         attendees: [],
-    //         hostPhotoURL: '',
-    //       })
-    //     );
-    // navigate(`/events/${id}`);
+    id = id ?? createId();
+    event
+      ? dispatch(updateEvent({ ...event, ...data, data: data.date.toString() }))
+      : dispatch(
+          createEvent({
+            ...data,
+            id,
+            hostedBy: 'bob',
+            attendees: [],
+            hostPhotoURL: '',
+            data: data.date.toString(),
+          })
+        );
+    navigate(`/events/${id}`);
   };
 
   return (
