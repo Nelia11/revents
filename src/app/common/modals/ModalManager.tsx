@@ -1,7 +1,8 @@
 import { useAppSelector } from '../../store/store';
+import LoginForm from '../../../features/auth/LoginForm';
 
 const ModalManager = () => {
-  const modalLookup = {};
+  const modalLookup = { LoginForm };
   const { type, data, open } = useAppSelector((state) => state.modals);
   let renderedModal;
 

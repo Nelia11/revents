@@ -3,7 +3,7 @@ import { Button, Container, Menu, MenuItem } from 'semantic-ui-react';
 import SignedInMenu from './SignedInMenu';
 import { useState } from 'react';
 import SignedOutButtons from './SignedOutButtons';
-import logo from '/logo.png'
+import logo from '/logo.png';
 
 const NavBar = () => {
   const [auth, setAuth] = useState(true);
@@ -26,11 +26,7 @@ const NavBar = () => {
             content='Create event'
           />
         </MenuItem>
-        {auth ? (
-          <SignedInMenu setAuth={setAuth} />
-        ) : (
-          <SignedOutButtons setAuth={setAuth} />
-        )}
+        {!auth ? <SignedInMenu setAuth={setAuth} /> : <SignedOutButtons />}
       </Container>
     </Menu>
   );
