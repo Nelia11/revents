@@ -1,21 +1,22 @@
-import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Dropdown, Image, Menu } from 'semantic-ui-react';
+import { useAppDispatch, useAppSelector } from '../../store/store';
+import { signOut } from '../../../features/auth/authSlice';
+import user from '/user.png';
 
-interface SignedInMenuProps {
-  setAuth: (value: boolean) => void;
-}
-const SignedInMenu: FC<SignedInMenuProps> = ({ setAuth }) => {
+const SignedInMenu = () => {
+  const { currentUser } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    setAuth(false);
+    dispatch(signOut());
     navigate('/');
   };
   return (
     <Menu.Item position='right'>
-      <Image avatar spaced src='/user.png' />
-      <Dropdown pointing='top left' text='Bob'>
+      <Image avatar spaced src={user} />
+      <Dropdown pointing='top left' text={currentUser?.email}>
         <Dropdown.Menu>
           <Dropdown.Item
             as={Link}
