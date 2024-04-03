@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 interface ModalState {
   open: boolean;
   type: string | null;
-  data: any;
+  data: string | null;
 }
 
 const initialState: ModalState = {
