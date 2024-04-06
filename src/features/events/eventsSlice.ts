@@ -14,6 +14,9 @@ export const eventsSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
+    setEvents: (state, action) => {
+      state.events = action.payload;
+    },
     createEvent: (state, action) => {
       state.events.push(action.payload);
     },
@@ -31,4 +34,5 @@ export const eventsSlice = createSlice({
   },
 });
 
-export const { createEvent, updateEvent, deleteEvent } = eventsSlice.actions;
+export const { createEvent, updateEvent, deleteEvent, setEvents } =
+  eventsSlice.actions;
