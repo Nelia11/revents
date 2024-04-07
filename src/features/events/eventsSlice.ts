@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { sampleData } from '../../app/api/sampleData';
 import { AppEvent } from '../../interfaces/event';
+import { Timestamp } from 'firebase/firestore';
 
 interface Events {
   events: AppEvent[];
@@ -14,8 +15,24 @@ export const eventsSlice = createSlice({
   name: 'events',
   initialState,
   reducers: {
-    setEvents: (state, action) => {
-      state.events = action.payload;
+    setEvents: {
+      reducer: (state, action: PayloadAction<AppEvent[]>) => {
+        state.events = action.payload;
+      },
+      prepare: (events: any) => {
+        const mapped = events.map((e: any) => {
+          return {
+            ...e,
+            date: new Timestamp(
+              Number(e.date.seconds),
+              Number(e.date.nanoseconds)
+            )
+              .toDate()
+              .toISOString(),
+          };
+        });
+        return { payload: mapped };
+      },
     },
     createEvent: (state, action) => {
       state.events.push(action.payload);
