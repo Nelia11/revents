@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { sampleData } from '../../app/api/sampleData';
 import { AppEvent } from '../../interfaces/event';
 import { Timestamp } from 'firebase/firestore';
 
@@ -8,7 +7,7 @@ interface Events {
 }
 
 const initialState: Events = {
-  events: sampleData,
+  events: [],
 };
 
 export const eventsSlice = createSlice({
