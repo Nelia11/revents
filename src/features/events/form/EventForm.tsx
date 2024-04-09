@@ -5,12 +5,17 @@ import { Controller, FieldValues, useForm } from 'react-hook-form';
 import { categoryOptions } from './categoryOptions';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker from 'react-datepicker';
-import { useDispatch } from 'react-redux';
-import { createId } from '@paralleldrive/cuid2';
-import { createEvent, updateEvent } from '../eventsSlice';
+import { AppEvent } from '../../../interfaces/event';
+import {
+  Timestamp,
+  collection,
+  doc,
+  setDoc,
+  updateDoc,
+} from 'firebase/firestore';
+import { db } from '../../../app/config/firebase';
 
 const EventForm = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const {
@@ -21,26 +26,44 @@ const EventForm = () => {
     formState: { errors, isValid, isSubmitting },
   } = useForm({ mode: 'onTouched' });
 
-  let { id } = useParams();
+  const { id } = useParams();
   const event = useAppSelector((state) =>
     state.events.events.find((e) => e.id === id)
   );
 
-  const onSubmit = (data: FieldValues) => {
-    id = id ?? createId();
-    event
-      ? dispatch(updateEvent({ ...event, ...data, data: data.date.toString() }))
-      : dispatch(
-          createEvent({
-            ...data,
-            id,
-            hostedBy: 'bob',
-            attendees: [],
-            hostPhotoURL: '',
-            data: data.date.toString(),
-          })
-        );
-    navigate(`/events/${id}`);
+  const updateEvent = async (data: AppEvent) => {
+    if (!event) return;
+    const docRef = doc(db, 'events', event.id);
+    await updateDoc(docRef, {
+      ...data,
+      date: Timestamp.fromDate(data.date as unknown as Date),
+    });
+  };
+
+  const createEvent = async (data: FieldValues) => {
+    const newEventRef = doc(collection(db, 'events'));
+    await setDoc(newEventRef, {
+      ...data,
+      hostedBy: 'bob',
+      attendees: [],
+      hostPhotoURL: '',
+      date: Timestamp.fromDate(data.date as unknown as Date),
+    });
+    return newEventRef;
+  };
+
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      if (event) {
+        await updateEvent({ ...event, ...data });
+        navigate(`/events/${event.id}`);
+      } else {
+        const ref = await createEvent(data);
+        navigate(`events/${ref.id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
