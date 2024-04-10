@@ -63,6 +63,7 @@ const EventForm = () => {
         navigate(`events/${ref.id}`);
       }
     } catch (error: any) {
+      console.error(error);
       toast.error(error.message);
     }
   };
