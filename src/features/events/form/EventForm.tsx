@@ -14,6 +14,7 @@ import {
   updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../../app/config/firebase';
+import { toast } from 'react-toastify';
 
 const EventForm = () => {
   const navigate = useNavigate();
@@ -61,8 +62,8 @@ const EventForm = () => {
         const ref = await createEvent(data);
         navigate(`events/${ref.id}`);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 
