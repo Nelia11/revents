@@ -4,13 +4,39 @@ import EventDetailedInfo from './EventDetailedInfo';
 import EventDetailedChat from './EventDetailedChat';
 import EventDetailedSidebar from './EventDetailedSidebar';
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../../app/store/store';
+import { useAppDispatch, useAppSelector } from '../../../app/store/store';
+import { useEffect, useState } from 'react';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../../../app/config/firebase';
+import { setEvents } from '../eventsSlice';
+import { toast } from 'react-toastify';
+import LoadingComponent from '../../../app/layout/nav/LoadingComponent';
 
 const EventDetailedPage = () => {
   const { id } = useParams();
   const event = useAppSelector((state) =>
     state.events.events.find((e) => e.id === id)
   );
+  const dispatch = useAppDispatch();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (!id) return;
+    const unsubscribe = onSnapshot(doc(db, 'events', id), {
+      next: (doc) => {
+        dispatch(setEvents({ id: doc.id, ...doc.data }));
+        setIsLoading(false);
+      },
+      error: (err) => {
+        console.error(err)
+        toast.error(err.message);
+        setIsLoading(false);
+      },
+    });
+    return () => unsubscribe();
+  }, [id, dispatch]);
+
+  if (isLoading) return <LoadingComponent />;
 
   if (!event) return <h2>Event not found</h2>;
 
