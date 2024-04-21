@@ -41,7 +41,7 @@ export const useFirestore = <T>(path: string) => {
             return;
           }
           querySnapshot.forEach((doc) =>
-            data.push({ id: doc.id, ...doc.data })
+            data.push({ id: doc.id, ...doc.data() })
           );
           dispatch(actions.success(data as unknown as T));
         },
@@ -66,7 +66,7 @@ export const useFirestore = <T>(path: string) => {
             dispatch(actions.error('Document does not exist'));
           }
           dispatch(
-            actions.success({ id: doc.id, ...doc.data } as unknown as T)
+            actions.success({ id: doc.id, ...doc.data() } as unknown as T)
           );
         },
       });
