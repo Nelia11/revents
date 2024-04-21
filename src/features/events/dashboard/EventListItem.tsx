@@ -10,29 +10,14 @@ import {
 import EventListAttendee from './EventListAttendee';
 import { AppEvent } from '../../../interfaces/event';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { toast } from 'react-toastify';
-import { deleteDoc, doc } from 'firebase/firestore';
-import { db } from '../../../app/config/firebase';
+import { useFirestore } from '../../../app/hooks/firestore/useFirestore';
 
 interface EventListItemProps {
   event: AppEvent;
 }
 
 const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const removeEvent = async () => {
-    setIsLoading(true);
-    try {
-      await deleteDoc(doc(db, 'events', event.id));
-    } catch (error: any) {
-      console.error(error);
-      toast.error(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { remove } = useFirestore('events');
 
   return (
     <SegmentGroup>
@@ -68,8 +53,7 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
         <span>{event.description}</span>
         <Item>
           <Button
-            loading={isLoading}
-            onClick={() => removeEvent()}
+            onClick={() => remove(event.id)}
             color='red'
             floated='right'
             content='Delete'
