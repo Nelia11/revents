@@ -58,7 +58,6 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
       <Segment clearing>
         <span>{event.description}</span>
         <Item>
-          <Button color='red' floated='right' content='Delete' />
           <Button
             as={Link}
             to={`/events/${event.id}`}
