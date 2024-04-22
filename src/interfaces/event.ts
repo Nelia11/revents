@@ -8,6 +8,7 @@ export interface AppEvent {
   street: string;
   hostedBy: string;
   hostPhotoURL: string;
+  isCancelled: boolean;
   attendees: Attendee[];
 }
 

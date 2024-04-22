@@ -3,6 +3,7 @@ import {
   Icon,
   Item,
   ItemGroup,
+  Label,
   List,
   Segment,
   SegmentGroup,
@@ -10,15 +11,12 @@ import {
 import EventListAttendee from './EventListAttendee';
 import { AppEvent } from '../../../interfaces/event';
 import { Link } from 'react-router-dom';
-import { useFirestore } from '../../../app/hooks/firestore/useFirestore';
 
 interface EventListItemProps {
   event: AppEvent;
 }
 
 const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
-  const { remove } = useFirestore('events');
-
   return (
     <SegmentGroup>
       <Segment>
@@ -32,6 +30,14 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
             <Item.Content>
               <Item.Header>{event.title}</Item.Header>
               <Item.Description>Hosted by {event.hostedBy}</Item.Description>
+              {event.isCancelled && (
+                <Label
+                  style={{ top: '-30px' }}
+                  ribbon='right'
+                  color='red'
+                  content='This event has been cancelled'
+                />
+              )}
             </Item.Content>
           </Item>
         </ItemGroup>
@@ -52,12 +58,7 @@ const EventListItem: React.FC<EventListItemProps> = ({ event }) => {
       <Segment clearing>
         <span>{event.description}</span>
         <Item>
-          <Button
-            onClick={() => remove(event.id)}
-            color='red'
-            floated='right'
-            content='Delete'
-          />
+          <Button color='red' floated='right' content='Delete' />
           <Button
             as={Link}
             to={`/events/${event.id}`}
