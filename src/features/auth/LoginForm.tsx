@@ -4,6 +4,8 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../app/store/store';
 import { closeModal } from '../../app/common/modals/modalSlice';
 import { signIn } from './authSlice';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../app/config/firebase';
 
 const LoginForm = () => {
   const {
@@ -14,9 +16,18 @@ const LoginForm = () => {
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: FieldValues) => {
-    dispatch(signIn(data));
-    dispatch(closeModal());
+  const onSubmit = async (data: FieldValues) => {
+    try {
+      const result = await signInWithEmailAndPassword(
+        auth,
+        data.email,
+        data.password
+      );
+      dispatch(signIn(result.user));
+      dispatch(closeModal());
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

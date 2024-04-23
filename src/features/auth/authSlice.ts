@@ -1,9 +1,10 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { User } from '../../interfaces/user';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { AppUser } from '../../interfaces/user';
+import { User } from 'firebase/auth';
 
 interface AuthState {
   authenticated: boolean;
-  currentUser: User | null;
+  currentUser: AppUser | null;
 }
 
 const initialState: AuthState = {
@@ -15,12 +16,21 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    signIn: (state, action) => {
-      state.authenticated = true;
-      state.currentUser = {
-        email: action.payload.email,
-        photoURL: '/user.png',
-      };
+    signIn: {
+      reducer: (state, action: PayloadAction<AppUser>) => {
+        state.authenticated = true;
+        state.currentUser = action.payload;
+      },
+      prepare: (user: User) => {
+        const mapped: AppUser = {
+          uid: user.uid,
+          email: user.email,
+          photoURL: user.photoURL,
+          displayName: user.displayName,
+          providerId: user.providerData[0].providerId,
+        };
+        return { payload: mapped };
+      },
     },
     signOut: (state) => {
       state.authenticated = false;
