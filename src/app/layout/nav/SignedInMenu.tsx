@@ -16,7 +16,7 @@ const SignedInMenu = () => {
   return (
     <Menu.Item position='right'>
       <Image avatar spaced src={user} />
-      <Dropdown pointing='top left' text={currentUser?.email}>
+      <Dropdown pointing='top left' text={currentUser?.email || ''}>
         <Dropdown.Menu>
           <Dropdown.Item
             as={Link}
