@@ -1,6 +1,7 @@
 import { useAppSelector } from '../../store/store';
 import LoginForm from '../../../features/auth/LoginForm';
 import { FC } from 'react';
+import RegisterForm from '../../../features/auth/RegisterForm';
 
 interface ModalLookup {
   [key: string]: FC<LoginFormProps>;
@@ -11,7 +12,7 @@ interface LoginFormProps {
 }
 
 const ModalManager = () => {
-  const modalLookup: ModalLookup = { LoginForm: LoginForm };
+  const modalLookup: ModalLookup = { LoginForm, RegisterForm };
   const { type, data, open } = useAppSelector((state) => state.modals);
   let renderedModal;
 
