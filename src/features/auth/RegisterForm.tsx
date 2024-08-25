@@ -1,4 +1,4 @@
-import { Button, Form } from 'semantic-ui-react';
+import { Button, Form, Label } from 'semantic-ui-react';
 import ModalWrapper from '../../app/common/modals/ModalWrapper';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useAppDispatch } from '../../app/store/store';
@@ -11,6 +11,8 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
+    setError,
+    clearErrors,
     formState: { isSubmitting, isValid, isDirty, errors },
   } = useForm({ mode: 'onTouched' });
 
@@ -24,9 +26,15 @@ const RegisterForm = () => {
       });
       dispatch(signIn(userCreds.user));
       dispatch(closeModal());
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      setError('root.serverError', {
+        type: '400', message: error.message
+      });
     }
+  };
+
+  const handleInputChange = () => {
+    clearErrors('root.serverError');
   };
 
   return (
@@ -37,6 +45,7 @@ const RegisterForm = () => {
           placeholder='Display name'
           {...register('displayName', { required: true })}
           error={errors.displayName && 'Display name is required'}
+          onChange={handleInputChange}
         />
         <Form.Input
           defaultValue=''
@@ -50,6 +59,7 @@ const RegisterForm = () => {
             (errors.email?.type === 'required' && 'Email is required') ||
             (errors.email?.type === 'pattern' && 'Email is invalid')
           }
+          onChange={handleInputChange}
         />
         <Form.Input
           type='password'
@@ -57,7 +67,15 @@ const RegisterForm = () => {
           placeholder='Password'
           {...register('password', { required: true })}
           error={errors.password && 'Password is required'}
+          onChange={handleInputChange}
         />
+        {errors.root && (
+          <Label 
+            basic color='red' 
+            style={{ display: 'block', marginBottom: 10 }} 
+            content={errors.root.serverError.message}
+          />
+        )}
         <Button
           loading={isSubmitting}
           disabled={!isValid || !isDirty || isSubmitting}
