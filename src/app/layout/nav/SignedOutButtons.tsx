@@ -18,6 +18,7 @@ const SignedOutButtons = () => {
         inverted
         content='Register'
         style={{ marginLeft: '0.5em' }}
+        onClick={() => dispatch(openModal({ type: 'RegisterForm' }))}
       />
     </MenuItem>
   );
